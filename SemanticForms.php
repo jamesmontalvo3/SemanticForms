@@ -193,6 +193,7 @@ $GLOBALS['wgAutoloadClasses']['SFYearInput'] = __DIR__ . '/includes/forminputs/S
 $GLOBALS['wgAutoloadClasses']['SFTreeInput'] = __DIR__ . '/includes/forminputs/SF_TreeInput.php';
 $GLOBALS['wgAutoloadClasses']['SFCategoryInput'] = __DIR__ . '/includes/forminputs/SF_CategoryInput.php';
 $GLOBALS['wgAutoloadClasses']['SFCategoriesInput'] = __DIR__ . '/includes/forminputs/SF_CategoriesInput.php';
+$GLOBALS['wgAutoloadClasses']['SFIndexInput'] = __DIR__ . '/includes/forminputs/SF_IndexInput.php';
 
 $GLOBALS['wgJobClasses']['createPage'] = 'SFCreatePageJob';
 $GLOBALS['wgAutoloadClasses']['SFCreatePageJob'] = __DIR__ . '/includes/SF_CreatePageJob.php';

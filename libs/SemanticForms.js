@@ -1045,6 +1045,8 @@ jQuery.fn.initializeJSElements = function( partOfMultiple ) {
 	// Enable the new remove button
 	this.find(".removeButton").click( function() {
 
+		var list = $(this).closest(".multipleTemplateList");
+		
 		// Unregister initialization and validation for deleted inputs
 		jQuery(this).parentsUntil( '.multipleTemplateInstance' ).last().parent().find("input, select, textarea").each(
 			function() {
@@ -1060,8 +1062,13 @@ jQuery.fn.initializeJSElements = function( partOfMultiple ) {
 				jQuery(this).remove();
 			});
 		});
-		
-		jQuery(this).indexMultipleTemplate();
+
+		// Without a timeout this would re-index when the item being removed
+		// was still part of the DOM. Attempts to use $.when( ... ).then( ... )
+		// did not work. Unfortunately I had to stick with this hack. Even if
+		// this fails for some reason, it's not the end of the world: Indexes
+		// will just look like 1,2,3,5,6,7 (4 removed)
+		setTimeout(function(){ jQuery(list).indexMultipleTemplate(); }, 500);
 		
 		return false;
 	});
@@ -1112,8 +1119,10 @@ jQuery.fn.initializeJSElements = function( partOfMultiple ) {
 // indexMultipleTemplate() finds inputs where class="multipleTemplateIndex"
 // within a multipleTemplateWrapper and gives them an incrementing value
 jQuery.fn.indexMultipleTemplate = function() {
-    this.closest(".multipleTemplateWrapper").find(".multipleTemplateIndex").each(function(index,element){
-        $(element).val(index);
+	var templateCount = 1;
+    this.closest(".multipleTemplateWrapper").find(".multipleTemplateInstance .multipleTemplateIndex").each(function(index,element){
+        $(element).val(templateCount);
+		templateCount++; // using built in "index" from .each() makes  
     });    
 }
 
