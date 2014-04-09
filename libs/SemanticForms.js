@@ -940,6 +940,8 @@ jQuery.fn.addInstance = function( addAboveCurInstance ) {
 		}
 	);
 
+	jQuery(this).indexMultipleTemplate();
+
 };
 
 // The first argument is needed, even though it's an attribute of the element
@@ -1058,6 +1060,9 @@ jQuery.fn.initializeJSElements = function( partOfMultiple ) {
 				jQuery(this).remove();
 			});
 		});
+		
+		jQuery(this).indexMultipleTemplate();
+		
 		return false;
 	});
 
@@ -1104,6 +1109,14 @@ jQuery.fn.initializeJSElements = function( partOfMultiple ) {
 		});
 };
 
+// indexMultipleTemplate() finds inputs where class="multipleTemplateIndex"
+// within a multipleTemplateWrapper and gives them an incrementing value
+jQuery.fn.indexMultipleTemplate = function() {
+    this.closest(".multipleTemplateWrapper").find(".multipleTemplateIndex").each(function(index,element){
+        $(element).val(index);
+    });    
+}
+
 var num_elements = 0;
 
 // Once the document has finished loading, set up everything!
@@ -1116,7 +1129,8 @@ jQuery(document).ready(function() {
 	});
 	jQuery('.multipleTemplateList').sortable({
 		axis: 'y',
-		handle: '.rearrangerImage'
+		handle: '.rearrangerImage',
+        stop: function ( event, ui ) { jQuery( ui.item ).indexMultipleTemplate(); }
 	});
 
 
